@@ -110,6 +110,23 @@ ou à la route admin.properties.update si le bien immobilier existe --}}
     </div>
     </div>
 
+    {{-- Selection des options --}}
+    @foreach ($options as $option)
+       <div class="form-check d-flex align-items-center my-2 gap-2">
+        <input class="form-check-input" 
+        name="options[]" 
+        type="checkbox" 
+        value="{{$option->id}}" 
+        id="{{$option->id}}"
+        {{-- Coche la case si l'option est déjà associée au bien --}}
+        {{ $property->options->contains($option) ? 'checked' : '' }}>
+
+        <label class="form-check-label" for="{{$option->id}}">
+         {{$option->name}}
+        </label>
+       </div>
+       @endforeach
+
     <div class="form-check form-switch my-3">
         <input type="hidden" name="sold" value="0">
         <input class="form-check-input" type="checkbox" value="1" id="sold" name="sold" {{ $property->sold ? 'checked' : '' }} role="switch">
