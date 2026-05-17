@@ -46,6 +46,63 @@
   </tr>
   @endforeach
 </table>
+</div>
+
+{{-- Formulaire de contact --}}
+<div class="container mt-4">
+  <h4>Intéressé par ce bien ?</h4>
+   {{-- Affiche un message de succès si la session contient une clé 'success' --}}
+    @if(session('success'))
+      <div class="alert alert-success">
+        {{ session('success') }}
+      </div>
+    @endif
+<form action="{{ route('property.contact', $property )}}" method="post">
+  @csrf
+    <div class="row">
+    <div class="col-md-6">
+    @include('shared.input', [
+        'label' => 'Prénom',
+        'name' => 'firstname'
+    ])
+    </div>
+
+    <div class="col-md-6">
+    @include('shared.input', [
+        'label' => 'Nom',
+        'name' => 'lastname'
+    ])
+    </div>
+
+    <div class="col-md-6">
+    @include('shared.input', [
+        'label' => 'Email',
+        'name' => 'email',
+        'type' => 'email'
+    ])
+    </div>
+
+    <div class="col-md-6">
+    @include('shared.input', [
+        'label' => 'Téléphone',
+        'name' => 'phone'
+    ])
+    </div>
+
+    <div class="col">
+    @include('shared.input', [
+        'label' => 'Votre message',
+        'name' => 'message',
+        'type' => 'textarea'
+    ])
+    </div>
+    </div>
+
+<div>
+  <button type="submit" class="btn btn-primary">Envoyer</button>
+</div>
+</form>
+</div>
 
 @endsection
 

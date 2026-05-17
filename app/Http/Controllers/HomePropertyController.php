@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Property;
 use App\Http\Requests\SearchPropertiesRequest;
+use App\Http\Requests\PropertyContactRequest;
+use App\Mail\PropertyContactMail;
+use Illuminate\Support\Facades\Mail;
 
 class HomePropertyController extends Controller
 {
@@ -62,5 +65,16 @@ class HomePropertyController extends Controller
         return view('property.show', [
             'property' => $property
         ]);
+    }
+
+    /**
+     * Envoie un email avec les données du formulaire de contact après validation des données
+     *
+     * Retourne à la page précédente avec un message de succès après l'envoi de l'email
+     */
+    public function contact(Property $property, PropertyContactRequest $request)
+    {
+        Mail::send(new PropertyContactMail($property, $request->validated()));
+        return back()->with('success', 'Votre message a été envoyé avec succès !');
     }
 }
